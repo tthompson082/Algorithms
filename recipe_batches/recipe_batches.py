@@ -8,13 +8,15 @@ def recipe_batches(recipe, ingredients):
     for recipe_key in recipe:
         if recipe_key not in ingredients:
             return 0
-        if ingredients[recipe_key] - recipe[recipe_key] > 0:
+        if ingredients[recipe_key] - recipe[recipe_key] >= 0:
             how_many_batches = int(
                 ingredients[recipe_key]/recipe[recipe_key])
             if max_batches == -1:
                 max_batches = how_many_batches
             elif how_many_batches < max_batches:
                 max_batches = how_many_batches
+        else:
+            max_batches = 0
     return max_batches
 
 

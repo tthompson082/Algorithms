@@ -7,20 +7,20 @@ import sys
 # recursive solution
 
 
-def eating_cookies(n, starting_position=0, cache={}):
-    ways_to_eat_cookies = [1, 2, 3]
-    how_many_possible_ways = 0
+def eating_cookies(n, cache=None):
     if n < 0:
         return 0
-    if n == 0:
+    elif n == 0:
         return 1
-    computed_ways = {}
-    for i in range(len(ways_to_eat_cookies)):
-        if n - ways_to_eat_cookies[i] not in computed_ways:
-            computed_ways[n - ways_to_eat_cookies[i]] = True
-            how_many_possible_ways += eating_cookies(
-                n - ways_to_eat_cookies[i], i, computed_ways)
-    return how_many_possible_ways
+    elif cache and cache[n] > 0:
+        return cache[n]
+    else:
+        if not cache:
+            cache = {i: 0 for i in range(n+1)}
+        value = eating_cookies(
+            n-1, cache) + eating_cookies(n-2, cache) + eating_cookies(n-3, cache)
+        cache[n] = value
+        return value
 
 
 if __name__ == "__main__":
